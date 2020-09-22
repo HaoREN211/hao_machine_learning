@@ -1,0 +1,99 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/submenu.css') }}"/>
+{% endblock %}
+
+{% block title %}
+    {{ super() }}
+    {% if title %}
+        {{ title }}
+    {% else %}
+        机器学习自助学习平台
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {# 它已经在基础模板中定义了一些内容 #}
+    {# 想要追加moment.js库的话，
+    就需要使用super()语句，才能继承基础模板中已有的内容，
+    否则就是替换。 #}
+    {{ super() }}
+    <script src="{{ url_for('static',filename='js/moment-with-locales.min.js') }}"
+            integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
+    {{ moment.include_moment() }}
+    <script type="application/javascript">
+        moment.locale("zh-CN");
+        function flask_moment_render(elem) {
+            $(elem).text(eval('moment("' + $(elem).data('timestamp') + '").' + $(elem).data('format') + ';'));
+            $(elem).removeClass('flask-moment').show();
+        }
+        function flask_moment_render_all() {
+            $('.flask-moment').each(function() {
+                flask_moment_render(this);
+                if ($(this).data('refresh')) {
+                    (function(elem, interval) { setInterval(function() { flask_moment_render(elem) }, interval); })(this, $(this).data('refresh'));
+                }
+            })
+        }
+        $(document).ready(function() {
+            flask_moment_render_all();
+        });
+    </script>
+
+    {# 使用中文,默认是英语的 #}
+    {{ moment.lang("zh-CN") }}　
+{% endblock %}
+
+{% block navbar %}
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                {% if current_user.is_authenticated %}
+                    <a class="navbar-brand" href="{{ url_for('main.logout') }}">登出</a>
+                {% endif %}
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            机器学习 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('main.index') }}"><span class="glyphicon glyphicon-earphone"></span> 诈骗电话</a></li>
+{#                            <li class="divider"></li>#}
+{#                            <li class="dropdown-submenu">#}
+{#                                <a tabindex="-1" href="#"><span class="glyphicon glyphicon-th-list"></span> 消费</a>#}
+{#                                <ul class="dropdown-menu">#}
+{#                                    <li><a href="{{ url_for('management.consumes') }}">消费明细</a></li>#}
+{#                                    <li class="divider"></li>#}
+{#                                    <li><a href="{{ url_for('management.consume_plates') }}">支付平台</a></li>#}
+{#                                </ul>#}
+{#                            </li>#}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
