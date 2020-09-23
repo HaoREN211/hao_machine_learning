@@ -1,4 +1,4 @@
-.idea\*
+.idea/*
 config_db.py
 *.pyc
 migrations/*
