@@ -47,10 +47,26 @@
 
     {# 使用中文,默认是英语的 #}
     {{ moment.lang("zh-CN") }}　
+
+    <script src="{{ url_for('static', filename='js/select2.4.0.0.min.js') }}"></script>
+
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('.select-control').select2();
+
+            var list_object = document.getElementsByClassName("select2-container");
+            for (var i =0; i<list_object.length; i++) {
+                list_object[i].style.width = "100%";
+            }
+
+            {# https://blog.csdn.net/john1337/article/details/53315969 #}
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { }
+        });
+    </script>
 {% endblock %}
 
 {% block navbar %}
-    <div class="navbar navbar-inverse" role="navigation">
+    <div class="navbar navbar-inverse" role="navigation" style="border-radius: 0%">
         <div class="container-fluid">
             <div class="navbar-header">
                 {% if current_user.is_authenticated %}
@@ -61,10 +77,10 @@
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            机器学习 <b class="caret"></b>
+                            <span class="glyphicon glyphicon-earphone"></span> 诈骗电话 <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('main.index') }}"><span class="glyphicon glyphicon-earphone"></span> 诈骗电话</a></li>
+                            <li><a href="{{ url_for('fraud_phone.data') }}"><span class="glyphicon glyphicon-book"></span> 数据</a></li>
 {#                            <li class="divider"></li>#}
 {#                            <li class="dropdown-submenu">#}
 {#                                <a tabindex="-1" href="#"><span class="glyphicon glyphicon-th-list"></span> 消费</a>#}
@@ -84,6 +100,9 @@
 
 {% block content %}
     {{ super() }}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/select2.min.css') }}" />
+
     <div class="container">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -97,3 +116,5 @@
         {% block app_content %}{% endblock %}
     </div>
 {% endblock %}
+
+

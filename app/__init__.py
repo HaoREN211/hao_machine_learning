@@ -48,6 +48,9 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from app.scenes.fraud_phone import bp as fraud_phone_bp
+    app.register_blueprint(fraud_phone_bp, url_prefix="/fraud_phone")
+
     if not app.debug:
         if not os.path.exists('logs'):
             os.mkdir('logs')

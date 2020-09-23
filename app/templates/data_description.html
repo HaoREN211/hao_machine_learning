@@ -1,0 +1,57 @@
+{% extends "_base.html" %}
+
+{% block app_content %}
+    <h1>查看字段的分布情况</h1>
+    <hr />
+    <div class="row">
+        <div class="col-sm-3">
+            <form method="post" role="form" class="form">
+                {{ form.csrf_token }}
+                <div class="row">
+                    <div class="form-group">
+                        {{ form.field_name.label }}：
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        {{ form.field_name(class="form-control") }}
+                    </div>
+                </div>
+                <div class="row">
+                    {{ form.scene_id }}
+                    {{ form.create_submit }}
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-4">
+            {% if list_value %}
+                <div class="row">
+                    <div class="alert alert-success">
+                        <h4>数据示例</h4>
+                        {% for current_value in list_value %}
+                            <p>{{ current_value }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-3">
+            {% if list_value %}
+                <div class="row">
+                    <div class="alert alert-success">
+                        <h4>数据量：{{ data_cnt }}</h4>
+                        <h4>最大值：{{ max_value }}</h4>
+                        <h4>最小值：{{ min_value }}</h4>
+                        <h4>平均值：{{ mean_value }}</h4>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

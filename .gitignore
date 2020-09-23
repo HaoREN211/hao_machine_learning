@@ -1,2 +1,5 @@
 .idea\*
 config_db.py
+*.pyc
+migrations/*
+logs/*
