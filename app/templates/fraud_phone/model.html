@@ -4,7 +4,7 @@
     {{ super() }}
     <style>
         .container ul{
-            width: 350px;
+            width: 300px;
             padding: 15px;
             min-height:300px;
             background-color:#FFFFF0;
@@ -17,7 +17,7 @@
         .container ul li{
             display: block;
             float: left;
-            width: 310px;
+            width: 265px;
             height: 35px;
             line-height: 35px;
             border-radius: 4px;
@@ -54,16 +54,20 @@
         {# 待选的入模特征列表 #}
         <div class="col-sm-4">
             <h3>请选择特征</h3>
-            <ul>
-                {% for field in fields %}
-                    <li id="{{ field.id }}">{{ field.field_description }}</li>
-                {% endfor %}
-            </ul>
+            <div style="height: 400px; overflow: auto; overflow-x: hidden">
+                <ul>
+                    {% for field in fields %}
+                        <li id="{{ field.id }}">{{ field.field_description }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
         {# 选择的入模特征 #}
         <div class="col-sm-4">
             <h3>已选特征</h3>
-            <ul id="ul_field_selected"></ul>
+            <div style="height: 400px; overflow: auto; overflow-x: hidden">
+                <ul id="ul_field_selected"></ul>
+            </div>
         </div>
 
         <div class="col-sm-1"></div>
