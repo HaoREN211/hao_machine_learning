@@ -23,6 +23,9 @@
     就需要使用super()语句，才能继承基础模板中已有的内容，
     否则就是替换。 #}
     {{ super() }}
+
+    <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+
     <script src="{{ url_for('static',filename='js/moment-with-locales.min.js') }}"
             integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
     {{ moment.include_moment() }}
@@ -74,6 +77,7 @@
                 {% endif %}
             </div>
             <div>
+                {# 诈骗电话部分 #}
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -81,15 +85,8 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ url_for('fraud_phone.data') }}"><span class="glyphicon glyphicon-book"></span> 数据</a></li>
-{#                            <li class="divider"></li>#}
-{#                            <li class="dropdown-submenu">#}
-{#                                <a tabindex="-1" href="#"><span class="glyphicon glyphicon-th-list"></span> 消费</a>#}
-{#                                <ul class="dropdown-menu">#}
-{#                                    <li><a href="{{ url_for('management.consumes') }}">消费明细</a></li>#}
-{#                                    <li class="divider"></li>#}
-{#                                    <li><a href="{{ url_for('management.consume_plates') }}">支付平台</a></li>#}
-{#                                </ul>#}
-{#                            </li>#}
+                            <li class="divider"></li>
+                            <li><a href="{{ url_for('fraud_phone.model') }}"><span class="glyphicon glyphicon-inbox"></span> 模型</a></li>
                         </ul>
                     </li>
                 </ul>
